@@ -1,0 +1,31 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: 安装依赖
+      run: |
+        pip install PyQt5 pyinstaller
+    
+    - name: 打包
+      run: |
+        pyinstaller --onefile --windowed --name="视频音量统一工具" adjust_volume_gui.py
+    
+    - name: 上传
+      uses: actions/upload-artifact@v3
+      with:
+        name: 视频音量统一工具
+        path: dist/*.exe
