@@ -11,8 +11,11 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
+    - name: 检出代码
+      uses: actions/checkout@v4  # 升级到 v4
+    
+    - name: 设置 Python
+      uses: actions/setup-python@v5  # 升级到 v5
       with:
         python-version: '3.10'
     
@@ -24,8 +27,8 @@ jobs:
       run: |
         pyinstaller --onefile --windowed --name="视频音量统一工具" adjust_volume_gui.py
     
-    - name: 上传
-      uses: actions/upload-artifact@v3
+    - name: 上传产物
+      uses: actions/upload-artifact@v4  # 升级到 v4
       with:
         name: 视频音量统一工具
         path: dist/*.exe
